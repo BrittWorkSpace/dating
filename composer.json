@@ -1,0 +1,14 @@
+{
+  "name": "328/dating",
+  "authors":
+  [
+    {
+      "name":"Michael Britt",
+      "email": "mbritt3@mail.greenriver.edu"
+    }
+  ],
+  "require":
+  {
+    "bcosca/fatfree-core": "dev-master"
+  }
+}
