@@ -21,10 +21,42 @@ $f3 = Base::instance();
 $f3->route('GET /', function ()
     {
         $view = new View;
-        echo $view->render
-        ('views/home.html');
+        echo $view->render('views/home.html');
     }
 );
+
+//personal info route
+$f3->route('GET /personalInfo', function ()
+{
+    $view = new View;
+    echo $view->render('views/personalInfo.html');
+}
+);
+
+//profile enrty route
+$f3->route('GET /profileEntry', function ()
+{
+    $view = new View;
+    echo $view->render('views/profileEntry.html');
+}
+//interests route
+);
+$f3->route('GET /interests', function ()
+{
+    $view = new View;
+    echo $view->render('views/interests.html');
+}
+);
+
+//profileSummary route
+$f3->route('GET /profileSummary', function ()
+{
+    $view = new View;
+    echo $view->render('views/profileSummary.html');
+}
+);
+
+
 //run fat free
 $f3->run();
 
