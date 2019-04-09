@@ -13,37 +13,51 @@
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="{{@BASE}}">Villians need love too</a>
     </nav>
-    <form method="post" action="personalInfo.html">
-        <h1 border-bottom>Personal Information</h1>
+    <div class=" p-2 border border-light m-5">
+        <form method="post" action="profileEntry.html">
+             <h1 class="border-bottom col">Personal Information</h1>
 
-        <!--String Fields -->
-        <div class="form-group">
-            <label class="font-weight-bold" for="fname">First Name</label>
-            <input type="email" class="form-control" id="fname" placeholder="Enter First Name Here">
-        </div>
-        <div class="form-group">
-            <label class="font-weight-bold" for="lname">Last Name</label>
-            <input type="email" class="form-control" id="lname" placeholder="Enter Last Name Here">
-        </div>
-        <div class="form-group">
-            <label class="font-weight-bold"  for="age">Age</label>
-            <input type="email" class="form-control" id="age" placeholder="Enter numeric age">
-        </div>
+            <!--String Fields -->
+            <div class="form-group col-8">
+                <label class="font-weight-bold" for="fname">First Name</label>
+                <input type="text" class="form-control" id="fname" placeholder="Enter First Name Here">
+            </div>
+            <div class="form-group col-8">
+                <label class="font-weight-bold" for="lname">Last Name</label>
+                <input type="text" class="form-control" id="lname" placeholder="Enter Last Name Here">
+            </div>
 
-        <!-- Gender Radio Button-->
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="Male" value="M" checked>
-            <label class="form-check-label" for="Male">
-                Male
-            </label>
-        </div>
-        <div class="form-check form-check-inline" id="gender">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="Female" value="F">
-            <label class="form-check-label" for="Female">
-                Female
-            </label>
-        </div>
-    </form>
+            <!-- Number field -->
+            <div class="form-group col-8">
+                <label class="font-weight-bold"  for="age">Age</label>
+                <input type="number" class="form-control" id="age" placeholder="Enter numeric age">
+            </div>
+
+            <!-- Gender Radio Button-->
+            <div class="col-8">
+                <label class="font-weight-bold d-block col-">Gender</label>
+                <div class="form-check form-check-inline" id="radio button">
+                    <input class="form-check-input" type="radio" name="gender[]" id="Male" value="M" checked>
+                    <label class="form-check-label" for="Male">
+                        Male
+                    </label>
+                </div>
+                <div class="form-check form-check-inline" id="gender">
+                    <input class="form-check-input" type="radio" name="gender[]" id="Female" value="F">
+                    <label class="form-check-label" for="Female">
+                        Female
+                    </label>
+                </div>
+            </div>
+
+            <!-- Phone number -->
+            <div class="form-group col-8 mt-1">
+                <label class="font-weight-bold"  for="phone">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" placeholder="222-333-4444">
+            </div>
+            <button type="submit" class="btn btn-primary float-right">Next</button>
+        </form>
+    </div>
 
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
