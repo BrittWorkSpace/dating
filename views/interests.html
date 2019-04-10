@@ -11,23 +11,26 @@
     <title>Document</title>
 </head>
 <body>
+    <!--Nav Bar-->
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="{{@BASE}}">Villians need love too</a>
     </nav>
     <div class=" p-2 border m-5">
         <!--Start of form -->
-        <form method="post" action="profileEntry.html">
-            <!--String fields -->
+        <form method="post" action="profileSummary.html">
+            <!--Form Title -->
             <div class="form-row">
                 <h1 class="border-bottom col">Interests</h1>
             </div>
+
+            <!-- ***************Indoor checkbox Button***************************************-->
+
             <div class="form-row">
-                <!-- Indoor Checkboxes Button-->
                 <label class="font-weight-bold d-block col-md-12">In-door Interests</label>
             </div>
             <div class="ml-2">
                 <div class="form-check form-check-inline col-md-2">
-                    <input class="form-check-input" type="checkbox" name="indoor[]" id="Tv" value="Tv" checked>
+                    <input class="form-check-input" type="checkbox" name="indoor[]" id="Tv" value="Tv">
                     <label class="form-check-label" for="Tv">
                         Tv
                     </label>
@@ -76,7 +79,54 @@
                 </div>
             </div>
 
+            <!-- ***************Outdoor checkbox Button***************************************-->
+
+            <div class="form-row">
+                <label class="font-weight-bold d-block col-md-12">Out-door Interests</label>
+            </div>
+            <div class="ml-2">
+                <div class="form-check form-check-inline col-md-2">
+                    <input class="form-check-input" type="checkbox" name="outdoor[]" id="Hike" value="Hike">
+                    <label class="form-check-label" for="Hike">
+                        Hiking
+                    </label>
+                </div>
+                <div class="form-check form-check-inline col-md-2">
+                    <input class="form-check-input" type="checkbox" name="outdoor[]" id="Bike" value="Bike">
+                    <label class="form-check-label" for="Bike">
+                        Biking
+                    </label>
+                </div>
+                <div class="form-check form-check-inline col-md-2 rads">
+                    <input class="form-check-input" type="checkbox" name="outdoor[]"  id="Swim" value="Swim">
+                    <label class="form-check-label" for="Swim">
+                        Swimming
+                    </label>
+                </div>
+                <div class="form-check form-check-inline col-md-2 rads">
+                    <input class="form-check-input" type="checkbox" name="outdoor[]"  id="Collect" value="Collect">
+                    <label class="form-check-label" for="Collect">
+                        Collecting
+                    </label>
+                </div>
+                <div class="form-check form-check-inline col-md-2">
+                    <input class="form-check-input" type="checkbox" name="outdoor[]"  id="Walk" value="Walk">
+                    <label class="form-check-label" for="Walk">
+                        Walking
+                    </label>
+                </div>
+                <div class="form-check form-check-inline col-md-2">
+                    <input class="form-check-input" type="checkbox" name="outdoor[]"  id="Climb" value="Climb">
+                    <label class="form-check-label" for="Climb">
+                        Climbing
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="next">Next</button>
         </form>
+
+        <!--***********End of Form********************************************-->
+
     </div>
 
 
