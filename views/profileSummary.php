@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
 </head>
 <body>
     <nav class="navbar navbar-light bg-light">
@@ -19,7 +19,7 @@
 
             <!--Left SIde-->
             <div class="col-md-6 h-100 border rounded">
-                <p>Name:</p>
+                <p class="mt-3">Name:</p>
                 <hr>
                 <p>Gender:</p>
                 <hr>
@@ -33,13 +33,15 @@
                 <hr>
                 <p>Seeking:</p>
                 <hr>
-                <p>Interests</p>
+                <p>Interests:</p>
 
             </div>
 
             <!--Right Side-->
-            <div class="col-md-6 h-100">
-
+            <div class="col-md-6 h-100 pl-3 pr-3">
+                <img src="images/profile.jpg" class="img-fluid rouned w-100" alt="Profile Pice">
+                <h4>Biography</h4>
+                <p>Testing</p>
             </div>
         </div>
 
@@ -47,6 +49,7 @@
         <div class="text-center">
          <button type="button" class="btn btn-primary btn-lg mt-3" id="contact">Contact Me</button>
         </div>
+    </div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

@@ -1,11 +1,3 @@
-<?php
-//indoor check box array
-$indoor = array("tv" =>"Tv", "mov" => "Movies", "cook" => "Cooking", "board" => "Board Games", "puzz" => "Puzzles",
-    "read" => "Reading", "card" => "Playing cards", "video" => "Video Games");
-$outdoor = array("hike" =>"Hiking", "bike" => "Biking", "swim" => "Swimming", "collect" => "Collecting",
-    "walk" => "Walking", "climb" =>"Climbing");
-include 'viewFunctions.php';
-?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -15,7 +7,7 @@ include 'viewFunctions.php';
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
     <title>Document</title>
 </head>
 <body>
@@ -25,7 +17,7 @@ include 'viewFunctions.php';
     </nav>
     <div class=" p-2 border rounded m-5">
         <!--Start of form -->
-        <form method="post" action="profileSummary.php">
+        <form method="post" action="profileSummary">
             <!--Form Title -->
             <div class="form-row">
                 <h1 class="border-bottom col">Interests</h1>
@@ -37,7 +29,19 @@ include 'viewFunctions.php';
                 <label class="font-weight-bold d-block col-md-12">In-door Interests</label>
             </div>
             <div class="ml-2">
-                <?php checkBoxes($indoor, "indoor[]");?>
+
+                <!--Use set array to build indoor buttons-->
+                <repeat group="{{ @indoor }}"
+                        key="{{ @key }}"
+                        value="{{ @value }}">
+                    <div class="form-check form-check-inline col-md-2">
+                        <input class='form-check-input' type='checkbox' name='indoor[]' id={{ @key }} value={{ @key }}>
+                        <label class='form-check-label' for={{ @key }}>
+                            {{ @value }}
+                        </label>
+                    </div>
+                </repeat>
+                <?php checkBoxes($indoor, "indoor[]"); ?>
             </div>
 
             <!-- ***************Outdoor checkbox Button***************************************-->
@@ -46,7 +50,16 @@ include 'viewFunctions.php';
                 <label class="font-weight-bold d-block col-md-12">Out-door Interests</label>
             </div>
             <div class="ml-2">
-                <?php  checkBoxes($outdoor, "outdoor[]");?>
+                <repeat group="{{ @outdoor }}"
+                        key="{{ @key }}"
+                        value="{{ @value }}">
+                    <div class="form-check form-check-inline col-md-2">
+                        <input class='form-check-input' type='checkbox' name='outdoor[]' id={{ @key }} value={{ @key }}>
+                        <label class='form-check-label' for={{ @key }}>
+                            {{ @value }}
+                        </label>
+                    </div>
+                </repeat>
             </div>
             <div class="text-right">
                 <button type="submit" class="btn btn-primary">Next</button>

@@ -19,40 +19,44 @@ $f3 = Base::instance();
 
 //Define a default route
 $f3->route('GET /', function ()
-    {
-        $view = new View;
-        echo $view->render('views/home.html');
-    }
+{
+    $view = new Template();
+    echo $view->render('views/home.html');
+}
 );
 
 //personal info route
-$f3->route('GET /personalInfo', function ()
+$f3->route('GET|POST /personalInfo', function ()
 {
-    $view = new View;
-    echo $view->render('views/personalInfo.html');
+    $view = new Template();
+    echo $view->render('views/personalInfo.php');
 }
 );
 
 //profile enrty route
-$f3->route('GET /profileEntry', function ()
+$f3->route('GET|POST /profileEntry', function ()
 {
-    $view = new View;
-    echo $view->render('views/profileEntry.html');
+    $view = new Template();
+    echo $view->render('views/profileEntry.php');
 }
-//interests route
 );
-$f3->route('GET /interests', function ()
+//interests route
+$f3->route('GET|POST /interests', function ($f3)
 {
-    $view = new View;
-    echo $view->render('views/interests.html');
+    $f3->set('indoor', array("tv" =>"Tv", "mov" => "Movies", "cook" => "Cooking", "board" => "Board Games", "puzz" => "Puzzles",
+        "read" => "Reading", "card" => "Playing cards", "video" => "Video Games"));
+    $f3->set('outdoor', array("hike" =>"Hiking", "bike" => "Biking", "swim" => "Swimming", "collect" => "Collecting",
+    "walk" => "Walking", "climb" =>"Climbing"));
+    $view = new Template();
+    echo $view->render('views/interests.php');
 }
 );
 
 //profileSummary route
-$f3->route('GET /profileSummary', function ()
+$f3->route('GET|POST /profileSummary', function ()
 {
-    $view = new View;
-    echo $view->render('views/profileSummary.html');
+    $view = new Template();
+    echo $view->render('views/profileSummary.php');
 }
 );
 

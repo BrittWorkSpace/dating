@@ -7,15 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
     <title>Personal Info Form</title>
 </head>
 <body>
     <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="home.html">Villians need love too</a>
+        <a class="navbar-brand" href="{{@BASE}}">Villians need love too</a>
     </nav>
     <div class="p-2 border rounded m-5">
-            <form method="post" action="profileEntry.html">
+            <form method="post" action="profileEntry">
                 <div class="form-row">
                  <h1 class="border-bottom col">Personal Information</h1>
                 </div>
@@ -59,8 +59,9 @@
                             <input type="tel" class="form-control" id="phone" placeholder="222-333-4444">
                         </div>
                     </div>
-                    <div class="col-md-4 h-100">
-                        <p>Note trial</p>
+                    <div class="col-md-4 h-100 border ">
+                        <p class="mt-4"><a>Note:</a> All information entered is protectedby our <a href="">privacy policy</a>Profile
+                        information can only be viewed by others with your permission.</p>
                     </div>
                 </div>
                 <div class="text-right">

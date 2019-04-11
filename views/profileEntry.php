@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
     <title>Document</title>
 </head>
 <body>
@@ -16,7 +16,7 @@
     </nav>
     <div class=" p-2 border rounded m-5">
         <!--Start of form -->
-        <form method="post" action="interests.html">
+        <form method="post" action="interests">
             <!--String fields -->
             <div class="form-row">
                 <h1 class="border-bottom col">Profile</h1>
