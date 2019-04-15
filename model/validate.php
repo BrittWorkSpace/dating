@@ -6,8 +6,6 @@
  * vesion 1.0
  */
 
-
-
 /**
  * Santize and check string for alphabetical
  * @param $data Represents string form data for names
@@ -82,6 +80,11 @@ function validEmail($data)
     }
 }
 
+/**
+ * Validates that values of checkboxes selected match original check boxes values
+ * @param $data checkboxes selected values
+ * @return bool|string returns true if valid or string of error message otherwise
+ */
 function validOutDoor($data)
 {
     $outdoor =array("hike" =>"Hiking", "bike" => "Biking", "swim" => "Swimming", "collect" => "Collecting",
@@ -94,9 +97,14 @@ function validOutDoor($data)
             return "Improper value returned";
         }
     }
-    return $data;
+    return true;
 }
 
+/**
+ * Validates that values of checkboxes selected match original check boxes values
+ * @param $data checkboxes selected values
+ * @return bool|string bool|string returns true if valid or string of error message otherwise
+ */
 function validIndoor($data)
 {
     $indoor = array("tv" =>"Tv", "mov" => "Movies", "cook" => "Cooking", "board" => "Board Games", "puzz" => "Puzzles",
@@ -104,6 +112,11 @@ function validIndoor($data)
     $var = 0;
     foreach($data as $key)
     {
+        if(!array_key_exists($key, $indoor))
+        {
+            return "Improper value returned";
+        }
     }
+    return true;
 }
 ?>
