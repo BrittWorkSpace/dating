@@ -6,6 +6,8 @@
  * vesion 1.0
  */
 
+
+
 /**
  * Santize and check string for alphabetical
  * @param $data Represents string form data for names
@@ -64,7 +66,11 @@ function validPhone($data)
     }
 }
 
-
+/**
+ * Checks if email provided is a valid email
+ * @param $data email provided
+ * @return array|string array of true and santizied value or error message to be used
+ */
 function validEmail($data)
 {
     $data = trim($data);
@@ -73,6 +79,31 @@ function validEmail($data)
         return array(true => $data);
     } else {
         return "Not a valid email make sure email matches format. you2email.com";
+    }
+}
+
+function validOutDoor($data)
+{
+    $outdoor =array("hike" =>"Hiking", "bike" => "Biking", "swim" => "Swimming", "collect" => "Collecting",
+        "walk" => "Walking", "climb" =>"Climbing");
+    $var = 0;
+    foreach($data as $key)
+    {
+        if(!array_key_exists($key, $outdoor))
+        {
+            return "Improper value returned";
+        }
+    }
+    return $data;
+}
+
+function validIndoor($data)
+{
+    $indoor = array("tv" =>"Tv", "mov" => "Movies", "cook" => "Cooking", "board" => "Board Games", "puzz" => "Puzzles",
+        "read" => "Reading", "card" => "Playing cards", "video" => "Video Games");
+    $var = 0;
+    foreach($data as $key)
+    {
     }
 }
 ?>
