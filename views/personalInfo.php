@@ -1,3 +1,11 @@
+<?php
+/**
+ * @author Michael Britt
+ * Date: 4/15/2019
+ * personalInfo.php
+ * A web page containing form data for a dating site
+ */
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -24,24 +32,28 @@
                         <!--String Fields -->
                         <div class="form-group">
                             <label class="font-weight-bold" for="fname">First Name</label>
-                            <input type="text" class="form-control" id="fname" placeholder="Enter First Name Here">
+                            <input type="text" class="form-control" id="fname" name="fname"
+                                   placeholder="Enter First Name Here">
                         </div>
 
                         <div class="form-group">
                             <label class="font-weight-bold" for="lname">Last Name</label>
-                            <input type="text" class="form-control" id="lname" placeholder="Enter Last Name Here">
+                            <input type="text" class="form-control" id="lname"  name="lname"
+                                   placeholder= "Enter Last Name Here">
                         </div>
 
                         <!-- Number field -->
                         <div class="form-group">
                             <label class="font-weight-bold"  for="age">Age</label>
-                            <input type="number" class="form-control" id="age" placeholder="Enter numeric age">
+                            <input type="text" class="form-control" id="age"  name="age"
+                                   placeholder="Enter numeric age">
                         </div>
 
                         <!-- Gender Radio Button-->
                         <label class="font-weight-bold d-block col-">Gender</label>
                         <div class="form-check form-check-inline" id="radio button">
-                            <input class="form-check-input" type="radio" name="gender[]" id="Male" value="M" checked>
+                            <input class="form-check-input" type="radio" name="gender[]" id="Male" value="M"
+                                   checked>
                             <label class="form-check-label" for="Male">
                                 Male
                             </label>
@@ -56,16 +68,17 @@
                         <!-- Phone number -->
                         <div class="form-group mt-1">
                             <label class="font-weight-bold"  for="phone">Phone Number</label>
-                            <input type="tel" class="form-control" id="phone" placeholder="222-333-4444">
+                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="222-333-4444">
                         </div>
                     </div>
-                    <div class="col-md-4 h-100 border ">
-                        <p class="mt-4"><a>Note:</a> All information entered is protectedby our <a href="">privacy policy</a>Profile
+                    <div class="col-md-4 h-100 border rounded mt-4 bg-light">
+                        <p class="p-1"><a class="font-weight-bold">Note:</a> All information entered is protectedby our
+                            <a href="">privacy policy</a>. Profile
                         information can only be viewed by others with your permission.</p>
                     </div>
                 </div>
                 <div class="text-right">
-                    <button type="submit" class="btn btn-primary">Next</button>
+                    <button type="submit" class="btn btn-primary mt-1">Next</button>
                 </div>
             </form>
     </div>

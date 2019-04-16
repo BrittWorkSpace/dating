@@ -1,3 +1,11 @@
+<?php
+/**
+ * @author Michael Britt
+ * Date: 4/16/2019
+ * profileEntry.php
+ * A web page containing form data for a dating site asking for location/preferences
+ */
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -26,10 +34,10 @@
                 <div class="col-md-6 h-100">
 
                     <label class="font-weight-bold" for="email">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter Email Here">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email Here">
 
                     <label class="font-weight-bold" for="state">State</label>
-                    <select class="form-control" id="state">
+                    <select class="form-control" id="state" name="state">
                         <option>Washington</option>
                         <option>California</option>
                     </select>
@@ -55,12 +63,12 @@
                 <div class="col-md-6 h-100">
                     <div class="form-group">
                         <label class="font-weight-bold" for="bio">Biography</label>
-                        <textarea class="form-control overflow-auto" id="bio" rows="6"></textarea>
+                        <textarea class="form-control overflow-auto" id="bio" name="bio" rows="6"></textarea>
                     </div>
                 </div>
             </div>
             <div class="text-right">
-            <button type="submit" class="btn btn-primary">Next</button>
+            <button type="submit" class="btn btn-primary mt-1">Next</button>
             </div>
         </form>
     </div>

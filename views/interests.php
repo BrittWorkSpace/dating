@@ -1,3 +1,11 @@
+<?php
+/**
+ * @author Michael Britt
+ * Date: 4/16/2019
+ * interests.php
+ * A web page containing form data for a dating site asking for interests
+ */
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -62,7 +70,7 @@
                 </repeat>
             </div>
             <div class="text-right">
-                <button type="submit" class="btn btn-primary">Next</button>
+                <button type="submit" class="btn btn-primary mt-1">Next</button>
             </div>
         </form>
 

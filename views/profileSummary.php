@@ -1,3 +1,11 @@
+<?php
+/**
+ * @author Michael Britt
+ * Date: 4/15/2019
+ * profileSummary.php
+ * A web page containing form data results for a dating site presented as a profile
+ */
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -16,7 +24,6 @@
     </nav>
     <div class="p-2 border rounded m-5">
         <div class="form-row ml-2 mt-2">
-
             <!--Left SIde-->
             <div class="col-md-6 h-100 border rounded">
                 <p class="mt-3">Name:</p>
