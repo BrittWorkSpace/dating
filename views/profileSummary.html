@@ -23,7 +23,7 @@
     <div class="p-2 border rounded m-5">
         <div class="form-row ml-2 mt-2">
             <!--Left SIde-->
-            <div class="col-md-6 h-100 border rounded p-2">
+            <div class="col-md-6  border rounded p-2">
                 <p>Name: {{@SESSION.fname}} {{@SESSION.lname}}</p>
                 <hr>
                 <p>Gender: {{@SESSION.gender}}</p>
@@ -38,13 +38,18 @@
                 <hr>
                 <p>Seeking:{{@SESSION.seeking}}</p>
                 <hr>
-                <p>Interests:</p>
+                <p>Interests: {{@SESSION.interests}}</p>
             </div>
 
             <!--Right Side-->
-            <div class="col-md-6 h-100 pl-3 pr-3">
+            <div class="col-md-6  pl-3 pr-3">
                 <img src="images/profile.jpg" class="img-fluid rouned w-100" alt="Profile Pice">
                 <h4>Biography</h4>
+            </div>
+        </div>
+        <div class="form-row ml-3 mt-2">
+            <div class="col-md-6  pl-3 pr-3"></div>
+            <div class="col-md-6  pl-3 pr-3">
                 <p id="test">{{@SESSION.bio}}</p>
             </div>
         </div>

@@ -85,6 +85,7 @@ $f3->route('GET|POST /profileSummary', function ($f3)
 {
     $_SESSION['indoor'] = $_POST[indoor];
     $_SESSION['outdoor'] = $_POST[outdoor];
+    $_SESSION['interests'] = implode(" ", $_POST[indoor]). " " . implode(" ", $_POST[outdoor]);
     print_r($_SESSION);
     $view = new Template();
     echo $view->render('views/profileSummary.html');
