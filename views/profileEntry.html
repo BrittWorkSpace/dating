@@ -21,7 +21,7 @@
     </nav>
     <div class=" p-2 border rounded m-5">
         <!--Start of form -->
-        <form method="post" action="interests">
+        <form method="post" action="profileEntry">
             <!--String fields -->
             <div class="form-row">
                 <h1 class="border-bottom col">Profile</h1>
@@ -31,14 +31,22 @@
                 <div class="col-md-6 h-100">
 
                     <label class="font-weight-bold" for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email Here">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email Here"
+                    <check if="{{ isset(@SESSION.email)}}">
+                        <true>value="{{@SESSION.email}}"</true>
+                    </check>
+                    >
 
                     <label class="font-weight-bold" for="state">State</label>
                     <select class="form-control" id="state" name="state">
                     <repeat group="{{ @states }}"
                             key="{{ @key }}"
                             value="{{ @value }}">
-                            <option value='{{@value}}'>{{@value}}</option>
+                            <option value='{{@value}}'
+                            <check if="{{ @SESSION.state == @value}}">
+                                <true>selected</true>
+                            </check>
+                            >{{@value}}</option>
                     </repeat>
                     </select>
 
@@ -47,14 +55,25 @@
                     <!--Male-->
                     <label class="font-weight-bold d-block col-">Seeking</label>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="seeking" id="Male" value="M" checked>
+                        <input class="form-check-input" type="radio" name="seeking" id="Male" value="M"
+                        <check if="{{ @SESSION.seeking == 'M'}}">
+                            <true>checked</true>
+                        </check>
+                        <check if="{{ @SESSION.methodtype == 'GET'}}">
+                            <true>checked</true>
+                        </check>
+                        >
                         <label class="form-check-label" for="Male">
                             Male
                         </label>
                     </div>
                     <!--Female-->
                     <div class="form-check form-check-inline" id="gender">
-                        <input class="form-check-input" type="radio" name="seeking" id="Female" value="F">
+                        <input class="form-check-input" type="radio" name="seeking" id="Female" value="F"
+                        <check if="{{ @SESSION.seeking == 'F'}}">
+                            <true>checked</true>
+                        </check>
+                        >
                         <label class="form-check-label" for="Female">
                             Female
                         </label>
@@ -63,7 +82,12 @@
                 <div class="col-md-6 h-100">
                     <div class="form-group">
                         <label class="font-weight-bold" for="bio">Biography</label>
-                        <textarea class="form-control overflow-auto" id="bio" name="bio" rows="6"></textarea>
+                        <textarea class="form-control" id="bio" name="bio" rows="6">
+                        <check if="{{ isset(@SESSION.bio)}}">
+                            <true>{{@SESSION.bio}}</true>
+                        </check>
+
+                        </textarea>
                     </div>
                 </div>
             </div>

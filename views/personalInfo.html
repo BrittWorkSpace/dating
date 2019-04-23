@@ -19,7 +19,8 @@
         <a class="navbar-brand" href="{{@BASE}}">Villians need love too</a>
     </nav>
     <div class="p-2 border rounded m-5">
-            <form method="post" action="profileEntry">
+        {{@SESSION.fname}}
+            <form method="post" action="personalInfo">
                 <div class="form-row">
                  <h1 class="border-bottom col">Personal Information</h1>
                 </div>
@@ -29,33 +30,57 @@
                         <div class="form-group">
                             <label class="font-weight-bold" for="fname">First Name</label>
                             <input type="text" class="form-control" id="fname" name="fname"
-                                   placeholder="Enter First Name Here">
+                                   placeholder="Enter First Name Here"
+                            <check if="{{ isset(@SESSION.fname)}}">
+                                <true>value="{{@SESSION.fname}}"</true>
+                            </check>
+                            >
                         </div>
 
                         <div class="form-group">
                             <label class="font-weight-bold" for="lname">Last Name</label>
                             <input type="text" class="form-control" id="lname"  name="lname"
-                                   placeholder= "Enter Last Name Here">
+                                   placeholder= "Enter Last Name Here"
+                            <check if="{{ isset(@SESSION.lname)}}">
+                                <true>value="{{@SESSION.lname}}"</true>
+                            </check>
+                            >
                         </div>
 
                         <!-- Number field -->
                         <div class="form-group">
                             <label class="font-weight-bold"  for="age">Age</label>
                             <input type="text" class="form-control" id="age"  name="age"
-                                   placeholder="Enter numeric age">
+                                   placeholder="Enter numeric age"
+                            <check if="{{ isset(@SESSION.age)}}">
+                                <true>value="{{@SESSION.age}}"</true>
+                            </check>
+                            >
                         </div>
 
                         <!-- Gender Radio Button-->
                         <label class="font-weight-bold d-block col-">Gender</label>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="gender" id="Male" value="M"
-                                   checked>
+
+                            <check if="{{ @SESSION.gender == 'M'}}">
+                                <true>checked</true>
+                            </check>
+                            <check if="{{ @SESSION.methodtype == 'GET'}}">
+                                <true>checked</true>
+                            </check>
+                            >
+
                             <label class="form-check-label" for="Male">
                                 Male
                             </label>
                         </div>
                         <div class="form-check form-check-inline" id="gender">
-                            <input class="form-check-input" type="radio" name="gender" id="Female" value="F">
+                            <input class="form-check-input" type="radio" name="gender" id="Female" value="F"
+                            <check if="{{ @SESSION.gender == 'F'}}">
+                                <true>checked</true>
+                            </check>
+                            >
                             <label class="form-check-label" for="Female">
                                 Female
                             </label>
@@ -64,7 +89,11 @@
                         <!-- Phone number -->
                         <div class="form-group mt-1">
                             <label class="font-weight-bold"  for="phone">Phone Number</label>
-                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="222-333-4444">
+                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="222-333-4444"
+                            <check if="{{ isset(@SESSION.lname)}}">
+                                <true>value="{{@SESSION.phone}}"</true>
+                            </check>
+                            >
                         </div>
                     </div>
                     <div class="col-md-4 h-100 border rounded mt-4 bg-light">
