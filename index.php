@@ -71,8 +71,8 @@ $f3->route('GET|POST /interests', function ($f3)
     $_SESSION['seeking'] = $_POST[seeking];
     $_SESSION['bio'] = $_POST[bio];
 
-    $f3->set('indoor', array("tv" =>"Tv", "mov" => "Movies", "cook" => "Cooking", "board" => "Board Games", "puzz" => "Puzzles",
-        "read" => "Reading", "card" => "Playing cards", "video" => "Video Games"));
+    $f3->set('indoor', array("tv" =>"Tv", "mov" => "Movies", "cook" => "Cooking", "board" => "Board-Games", "puzz" => "Puzzles",
+        "read" => "Reading", "card" => "Playing-Cards", "video" => "Video-Games"));
     $f3->set('outdoor', array("hike" =>"Hiking", "bike" => "Biking", "swim" => "Swimming", "collect" => "Collecting",
     "walk" => "Walking", "climb" =>"Climbing"));
     $view = new Template();
@@ -83,10 +83,20 @@ $f3->route('GET|POST /interests', function ($f3)
 //profileSummary route
 $f3->route('GET|POST /profileSummary', function ($f3)
 {
+    $activities="";
+    if(isset($_POST[indoor]))
+    {
+        $activities .= implode(" ", $_POST[indoor]);
+        $activities .= " ";
+    }
+    if(isset($_POST[outdoor]))
+    {
+        $activities.=implode(" ", $_POST[outdoor]);
+    }
+
     $_SESSION['indoor'] = $_POST[indoor];
     $_SESSION['outdoor'] = $_POST[outdoor];
-    $_SESSION['interests'] = implode(" ", $_POST[indoor]). " " . implode(" ", $_POST[outdoor]);
-    print_r($_SESSION);
+    $_SESSION['interests'] = $activities;
     $view = new Template();
     echo $view->render('views/profileSummary.html');
 }
