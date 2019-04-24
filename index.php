@@ -14,7 +14,7 @@ error_reporting(E_ALL);
 //require autoload file
 require_once('vendor/autoload.php');
 
-include('model/validate.php');
+require_once('model/validate.php');
 //create an instance of the base class
 $f3 = Base::instance();
 
@@ -22,7 +22,8 @@ $f3 = Base::instance();
 session_start();
 
 //state array
-$states = array(
+$states = array
+(
     'AL' => 'Alabama', 'AK' => 'Alaska', 'AZ' => 'Arizona', 'AR' => 'Arkansas', 'CA' => 'California','CO' => 'Colorado',
     'CT' => 'Connecticut', 'DE' => 'Delaware', 'DC' => 'District Of Columbia', 'FL' => 'Florida', 'GA' => 'Georgia',
     'HI' => 'Hawaii', 'ID' => 'Idaho', 'IL' => 'Illinois', 'IN' => 'Indiana', 'IA' => 'Iowa', 'KS' => 'Kansas',
@@ -63,8 +64,8 @@ $f3->route('GET|POST /personalInfo', function ($f3)
         {
             $f3->reroute('/profileEntry');
         }
+        $f3->set('errors', $arrayErr);
     }
-    var_dump($arrayErr);
     $view = new Template();
     echo $view->render('views/personalInfo.html');
 }
@@ -78,11 +79,17 @@ $f3->route('GET|POST /profileEntry', function ($f3) use ($states)
         $_SESSION['email'] = $_POST[email];
         $_SESSION['state'] = $_POST[state];
         $_SESSION['seeking'] = $_POST[seeking];
-        $_SESSION['bio'] = $_POST[bio];
-        $f3->set('states', $states);
-        $arrayErr=array("email"=>validEmail($_SESSION['email']),
-            "state"=>validateDropDown($_SESSION['state']. $states));
+        $_SESSION['bio'] = trimFilter($_POST[bio]);
+        $arrayErr=array("emailErr"=>validEmail($_SESSION['email']),
+            "stateErr"=>validateDropDown($_SESSION['state'], $states),
+            "genderErr"=>validGender($_SESSION['seeking']));
+        if(checkErrArray($arrayErr))
+        {
+            $f3->reroute('/interest');
+        }
+        $f3->set('errors', $arrayErr);
     }
+    $f3->set('states', $states);
     $view = new Template();
     echo $view->render('views/profileEntry.html');
 }
@@ -99,18 +106,28 @@ $f3->route('GET|POST /interest', function ($f3)
     $outdoor = array("hike" =>"Hiking", "bike" => "Biking", "swim" => "Swimming", "collect" => "Collecting",
         "walk" => "Walking", "climb" =>"Climbing");
     $activities="";
-    if(isset($_POST[indoor]))
+    if($_SERVER['REQUEST_METHOD'] =='POST')
     {
-        $activities .= implode(" ", $_POST[indoor]);
-        $activities .= " ";
+        if(isset($_POST[indoor]))
+        {
+            $activities .= implode(" ", $_POST[indoor]);
+            $activities .= " ";
+        }
+        if(isset($_POST[outdoor]))
+        {
+            $activities.=implode(" ", $_POST[outdoor]);
+        }
+        $_SESSION['indoor'] = $_POST[indoor];
+        $_SESSION['outdoor'] = $_POST[outdoor];
+        $_SESSION['interests'] = $activities;
+        $arrayErr=array("indoor" =>validCheckBoxArray($_SESSION['indoor'], $indoor),
+            "outdoot"=>validCheckBoxArray($_SESSION['outdoor'], $outdoor));
+        if(checkErrArray($arrayErr))
+        {
+            $f3->reroute('/profileSummary');
+        }
+        $f3->set('errors', $arrayErr);
     }
-    if(isset($_POST[outdoor]))
-    {
-        $activities.=implode(" ", $_POST[outdoor]);
-    }
-    $_SESSION['indoor'] = $_POST[indoor];
-    $_SESSION['outdoor'] = $_POST[outdoor];
-    $_SESSION['interests'] = $activities;
     $f3->set('indoor', $indoor );
     $f3->set('outdoor', $outdoor);
     $view = new Template();
