@@ -9,15 +9,16 @@
 /**
  * Santize and check string for alphabetical
  * @param $data Represents string form data for names
- * @return bool|array string representing error, or array constins true and sanitized datta
+ * @return string empty string if no errors or error message
  */
 function validName($data)
 {
-    $data=sanitizeTrim($data);
+
     //check if the string matches only alpha numeric
     if (ctype_alpha($data))
     {
-        return array(true=>$data);
+        return "";
+        //return array(true=>$data);
     }
     else
     {
@@ -29,15 +30,14 @@ function validName($data)
 /**
  * checks to see that an age is numeric and between 18 and 118
  * @param $data represent a phone number provided
- * @return array|string array of true and santizied value or error message to be used
+ * @return string empty string if no errors or error message
  */
 function validAge($data)
 {
-    $data=sanitizeTrim($data);
     //check is only numerical
     if(is_numeric($data) && ($data>17 && $data<118))
     {
-        return array(true=>$data);
+        return "";
     }
     else
     {
@@ -49,14 +49,13 @@ function validAge($data)
 /**
  * Checks to see if matches phone number
  * @param $data phone number inputted
- * @return array|string array of true and santizied value or error message to be used
+ * @return string empty string if no errors or error message
  */
 function validPhone($data)
 {
-    $data=sanitizeTrim($data);
-    if(preg_match("/^[0-9]{3}[0-9]{4}[0-9]{4}$/", $data))
+    if(preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/", $data))
     {
-        return array(true=>$data);
+        return "";
     }
     else
     {
@@ -67,54 +66,90 @@ function validPhone($data)
 /**
  * Checks if email provided is a valid email
  * @param $data email provided
- * @return array|string array of true and santizied value or error message to be used
+ * @return string empty string if no errors or error message
  */
 function validEmail($data)
 {
     $data = trim($data);
     if (filter_var($data, FILTER_VALIDATE_EMAIL))
     {
-        return array(true => $data);
+        return "";
     } else {
-        return "Not a valid email make sure email matches format. you2email.com";
+        return "Not a valid email make sure email matches format. You@email.com";
     }
 }
 
 /**
  * Validates that values of checkboxes selected match original check boxes values
  * @param $data checkboxes selected values
- * @return bool|string returns true if valid or string of error message otherwise
+ * @return string empty string if no errors or error message
  */
-function validOutDoor($data)
+function validCheckBoxArray($data , $array)
 {
-    $outdoor =array("hike" =>"Hiking", "bike" => "Biking", "swim" => "Swimming", "collect" => "Collecting",
-        "walk" => "Walking", "climb" =>"Climbing");
     $var = 0;
     foreach($data as $key)
     {
-        if(!array_key_exists($key, $outdoor))
+        if(!array_key_exists($key, $array))
         {
-            return "Improper value returned";
+            return "Improper value provided. Provided value does not match checkboxes provided";
         }
     }
     return true;
 }
 
 /**
- * Validates that values of checkboxes selected match original check boxes values
- * @param $data checkboxes selected values
- * @return bool|string bool|string returns true if valid or string of error message otherwise
+ * Checks that gender only has m or female selected
+ * @param $data posted value of radio button
+ * @return string empty string if no errors or error message
  */
-function validIndoor($data)
+function validGender($data)
 {
-    $indoor = array("tv" =>"Tv", "mov" => "Movies", "cook" => "Cooking", "board" => "Board Games", "puzz" => "Puzzles",
-        "read" => "Reading", "card" => "Playing cards", "video" => "Video Games");
-    $var = 0;
-    foreach($data as $key)
+    if($data=='M' || $data =='F')
     {
-        if(!array_key_exists($key, $indoor))
+        return"";
+    }
+    else
+    {
+        return "Either no radio box selected or invalid value returned.";
+    }
+}
+
+/**
+ * Returns a trimmed and sanatized string
+ * @param $data string provided
+ * @return mixed string stripped of special characters and trimed
+ */
+function trimFilter($data)
+{
+    return filter_var(trim($data), FILTER_SANITIZE_STRING);
+}
+
+/**
+ * validates a dropdown posted value returns a value inside its array
+ * @param $data posted value for dropdown
+ * @param $dropDownArray array of values for dropdown
+ * @return bool if value is in array
+ */
+function validateDropDown($data, $dropDownArray)
+{
+    if(in_array($data, $dropDownArray, TRUE))
+    {
+        return "";
+    }
+    return "No dropdown value selected or value is invalide";
+}
+/**
+ * Checks an error array has no set values if so no errors exist
+ * @param $data error array
+ * @return bool true:no errors, false:errors exist
+ */
+function checkErrArray($data)
+{
+    foreach ($data as $key => $value)
+    {
+        if($value!="")
         {
-            return "Improper value returned";
+            return false;
         }
     }
     return true;

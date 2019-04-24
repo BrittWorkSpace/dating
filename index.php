@@ -14,7 +14,7 @@ error_reporting(E_ALL);
 //require autoload file
 require_once('vendor/autoload.php');
 
-
+include('model/validate.php');
 //create an instance of the base class
 $f3 = Base::instance();
 
@@ -34,6 +34,7 @@ $states = array(
     'TN' => 'Tennessee', 'TX' => 'Texas', 'UT' => 'Utah', 'VT' => 'Vermont', 'VA' => 'Virginia', 'WA' => 'Washington',
     'WV' => 'West Virginia', 'WI' => 'Wisconsin', 'WY' => 'Wyoming'
 );
+
 //Define a default route
 $f3->route('GET /', function ()
 {
@@ -43,46 +44,60 @@ $f3->route('GET /', function ()
 );
 
 //personal info route
-$f3->route('GET|POST /personalInfo', function ()
+$f3->route('GET|POST /personalInfo', function ($f3)
 {
+    $_SESSION['methodtype']= $_SERVER['REQUEST_METHOD'];
+    $nameErr="error";
+    if($_SERVER['REQUEST_METHOD'] =='POST')
+    {
+        $_SESSION['fname'] = trimFilter($_POST[fname]);
+        $_SESSION['lname'] = trim($_POST[lname]);
+        $_SESSION['age'] = trimFilter($_POST[age]);
+        $_SESSION['gender'] = $_POST[gender];
+        $_SESSION['phone'] = trimFilter($_POST[phone]);
+
+        $arrayErr=array("fnameErr"=>validName($_SESSION['fname']),"lnameErr"=>validName($_SESSION['lname']),
+            "ageErr"=>validAge($_SESSION['age']), "genderErr"=>validGender($_SESSION['gender']),
+            "phoneErr"=>validPhone($_SESSION['phone']) );
+        if(checkErrArray($arrayErr))
+        {
+            $f3->reroute('/profileEntry');
+        }
+    }
+    var_dump($arrayErr);
     $view = new Template();
     echo $view->render('views/personalInfo.html');
 }
 );
 
 //profile enrty route
-$f3->route('GET|POST /profileEntry', function ($f3) use ($states) {
-    $_SESSION['fname'] = $_POST[fname];
-    $_SESSION['lname'] = $_POST[lname];
-    $_SESSION['age'] = $_POST[age];
-    $_SESSION['gender'] = $_POST[gender];
-    $_SESSION['phone'] = $_POST[phone];
-
-    $f3->set('states', $states);
+$f3->route('GET|POST /profileEntry', function ($f3) use ($states)
+{
+    if($_SERVER['REQUEST_METHOD'] =='POST')
+    {
+        $_SESSION['email'] = $_POST[email];
+        $_SESSION['state'] = $_POST[state];
+        $_SESSION['seeking'] = $_POST[seeking];
+        $_SESSION['bio'] = $_POST[bio];
+        $f3->set('states', $states);
+        $arrayErr=array("email"=>validEmail($_SESSION['email']),
+            "state"=>validateDropDown($_SESSION['state']. $states));
+    }
     $view = new Template();
     echo $view->render('views/profileEntry.html');
 }
 );
 //interests route
-$f3->route('GET|POST /interests', function ($f3)
+$f3->route('GET|POST /interest', function ($f3)
 {
-    $_SESSION['email'] = $_POST[email];
-    $_SESSION['state'] = $_POST[state];
-    $_SESSION['seeking'] = $_POST[seeking];
-    $_SESSION['bio'] = $_POST[bio];
 
-    $f3->set('indoor', array("tv" =>"Tv", "mov" => "Movies", "cook" => "Cooking", "board" => "Board-Games", "puzz" => "Puzzles",
-        "read" => "Reading", "card" => "Playing-Cards", "video" => "Video-Games"));
-    $f3->set('outdoor', array("hike" =>"Hiking", "bike" => "Biking", "swim" => "Swimming", "collect" => "Collecting",
-    "walk" => "Walking", "climb" =>"Climbing"));
-    $view = new Template();
-    echo $view->render('views/interests.html');
-}
-);
+    //indoor array
+    $indoor = array("tv" =>"Tv", "mov" => "Movies", "cook" => "Cooking", "board" => "Board-Games", "puzz" => "Puzzles",
+    "read" => "Reading", "card" => "Playing-Cards", "video" => "Video-Games");
 
-//profileSummary route
-$f3->route('GET|POST /profileSummary', function ($f3)
-{
+    //outdoor array
+    $outdoor = array("hike" =>"Hiking", "bike" => "Biking", "swim" => "Swimming", "collect" => "Collecting",
+        "walk" => "Walking", "climb" =>"Climbing");
     $activities="";
     if(isset($_POST[indoor]))
     {
@@ -93,10 +108,19 @@ $f3->route('GET|POST /profileSummary', function ($f3)
     {
         $activities.=implode(" ", $_POST[outdoor]);
     }
-
     $_SESSION['indoor'] = $_POST[indoor];
     $_SESSION['outdoor'] = $_POST[outdoor];
     $_SESSION['interests'] = $activities;
+    $f3->set('indoor', $indoor );
+    $f3->set('outdoor', $outdoor);
+    $view = new Template();
+    echo $view->render('views/interests.html');
+}
+);
+
+//profileSummary route
+$f3->route('GET|POST /profileSummary', function ($f3)
+{
     $view = new Template();
     echo $view->render('views/profileSummary.html');
 }
