@@ -32,8 +32,8 @@
                     <div class="form-group">
                         <label class="font-weight-bold" for="email">Email</label>
                         <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email Here"
-                        <check if="{{ isset(@SESSION.email)}}">
-                            <true>value="{{@SESSION.email}}"</true>
+                        <check if="{{ isset(@POST.email)}}">
+                            <true>value="{{@POST.email}}"</true>
                         </check>
                         >
                         <!--*******Error Span*************** -->
@@ -47,7 +47,7 @@
                                 key="{{ @key }}"
                                 value="{{ @value }}">
                                 <option value='{{@value}}'
-                                <check if="{{ @SESSION.state == @value}}">
+                                <check if="{{ @POST.state == @value}}">
                                     <true>selected</true>
                                 </check>
                                 >{{@value}}</option>
@@ -62,11 +62,8 @@
                     <label class="font-weight-bold d-block col-">Seeking</label>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="seeking" id="Male" value="M"
-                        <check if="{{ @SESSION.seeking == 'M'}}">
+                        <check if="{{ @POST.seeking == 'M'}}">
                             <true>checked</true>
-                        </check>
-                        <check if="{{ isset(@SESSION.seeking)}}">
-                            <false>checked</false>
                         </check>
                         >
                         <label class="form-check-label" for="Male">
@@ -76,7 +73,7 @@
                     <!--Female-->
                     <div class="form-check form-check-inline" id="gender">
                         <input class="form-check-input" type="radio" name="seeking" id="Female" value="F"
-                        <check if="{{ @SESSION.seeking == 'F'}}">
+                        <check if="{{ @POST.seeking == 'F'}}">
                             <true>checked</true>
                         </check>
                         >
@@ -91,8 +88,8 @@
                     <div class="form-group">
                         <label class="font-weight-bold" for="bio">Biography</label>
                         <textarea class="form-control" id="bio" name="bio" rows="6">
-                        <check if="{{ isset(@SESSION.bio)}}">
-                            <true>{{@SESSION.bio}}</true>
+                        <check if="{{ isset(@POST.bio)}}">
+                            <true>{{@POST.bio}}</true>
                         </check>
 
                         </textarea>

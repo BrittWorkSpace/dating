@@ -22,7 +22,7 @@ function validName($data)
     }
     else
     {
-        return "Invalid string. Numbers and special characters are not allowed.";
+        return "Invalid string. Contains numbers, special characters, or is empty.";
     }
 
 }
@@ -75,7 +75,7 @@ function validEmail($data)
     {
         return "";
     } else {
-        return "Not a valid email make sure email matches format. You@email.com";
+        return "Invalid email. Please enter email in format You@email.com";
     }
 }
 
@@ -107,13 +107,13 @@ function validCheckBoxArray($data , $array)
  */
 function validGender($data)
 {
-    if($data=='M' || $data =='F')
+    if($data=='M' || $data =='F' || !isset($data))
     {
         return"";
     }
     else
     {
-        return "Either no radio box selected or invalid value returned.";
+        return "Invalid value returned.";
     }
 }
 

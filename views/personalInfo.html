@@ -30,8 +30,8 @@
                             <label class="font-weight-bold" for="fname">First Name</label>
                             <input type="text" class="form-control" id="fname" name="fname"
                                    placeholder="Enter First Name Here"
-                            <check if="{{ isset(@SESSION.fname)}}">
-                                <true>value="{{@SESSION.fname}}"</true>
+                            <check if="{{ isset(@POST.fname)}}">
+                                <true>value="{{@POST.fname}}"</true>
                             </check>
                             >
                             <!--*******Error Span*************** -->
@@ -44,8 +44,8 @@
                             <label class="font-weight-bold" for="lname">Last Name</label>
                             <input type="text" class="form-control" id="lname"  name="lname"
                                    placeholder= "Enter Last Name Here"
-                            <check if="{{ isset(@SESSION.lname)}}">
-                                <true>value="{{@SESSION.lname}}"</true>
+                            <check if="{{ isset(@POST.lname)}}">
+                                <true>value="{{@POST.lname}}"</true>
                             </check>
                             >
                             <!--*******Error Span*************** -->
@@ -57,8 +57,8 @@
                             <label class="font-weight-bold"  for="age">Age</label>
                             <input type="text" class="form-control" id="age"  name="age"
                                    placeholder="Enter numeric age"
-                            <check if="{{ isset(@SESSION.age)}}">
-                                <true>value="{{@SESSION.age}}"</true>
+                            <check if="{{ isset(@POST.age)}}">
+                                <true>value="{{@POST.age}}"</true>
                             </check>
                             >
                             <!--*******Error Span*************** -->
@@ -70,10 +70,7 @@
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="gender" id="Male" value="M"
 
-                            <check if="{{ @SESSION.gender == 'M'}}">
-                                <true>checked</true>
-                            </check>
-                            <check if="{{ @SESSION.methodtype == 'GET'}}">
+                            <check if="{{ @POST.gender == 'M'}}">
                                 <true>checked</true>
                             </check>
                             >
@@ -84,7 +81,7 @@
                         </div>
                         <div class="form-check form-check-inline" id="gender">
                             <input class="form-check-input" type="radio" name="gender" id="Female" value="F"
-                            <check if="{{ @SESSION.gender == 'F'}}">
+                            <check if="{{ @POST.gender == 'F'}}">
                                 <true>checked</true>
                             </check>
                             >
@@ -99,8 +96,8 @@
                         <div class="form-group mt-1">
                             <label class="font-weight-bold"  for="phone">Phone Number</label>
                             <input type="tel" class="form-control" id="phone" name="phone" placeholder="222-333-4444"
-                            <check if="{{ isset(@SESSION.lname)}}">
-                                <true>value="{{@SESSION.phone}}"</true>
+                            <check if="{{ isset(@POST.phone)}}">
+                                <true>value="{{@POST.phone}}"</true>
                             </check>
                             >
                             <!--*******Error Span*************** -->

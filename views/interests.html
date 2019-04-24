@@ -40,8 +40,8 @@
                         value="{{ @value }}">
                     <div class="form-check form-check-inline col-md-2">
                         <input class='form-check-input' type='checkbox' name='indoor[]' id={{ @key }} value={{ @value }}
-                        <check if="{{isset(@SESSION.indoor) }}">
-                            <check if="{{ in_array(@value, @SESSION.indoor) }}">
+                        <check if="{{isset(@POST.indoor) }}">
+                            <check if="{{ in_array(@value, @POST.indoor) }}">
                                 <true>checked</true>
                             </check>
                         </check>
@@ -66,8 +66,8 @@
                         value="{{ @value }}">
                     <div class="form-check form-check-inline col-md-2">
                         <input class='form-check-input' type='checkbox' name='outdoor[]' id={{ @key }} value={{ @value }}
-                        <check if="{{isset(@SESSION.outdoor) }}">
-                            <check if="{{ in_array(@value, @SESSION.outdoor) }}">
+                        <check if="{{isset(@POST.outdoor) }}">
+                            <check if="{{ in_array(@value, @POST.outdoor) }}">
                                 <true>checked</true>
                             </check>
                         </check>
