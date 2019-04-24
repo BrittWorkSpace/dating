@@ -19,7 +19,6 @@
         <a class="navbar-brand" href="{{@BASE}}">Villians need love too</a>
     </nav>
     <div class="p-2 border rounded m-5">
-        {{@SESSION.fname}}
             <form method="post" action="personalInfo">
                 <div class="form-row">
                  <h1 class="border-bottom col">Personal Information</h1>
@@ -35,7 +34,11 @@
                                 <true>value="{{@SESSION.fname}}"</true>
                             </check>
                             >
+                            <!--*******Error Span*************** -->
+                            <span class="text-danger">{{@errors.fnameErr}}</span>
                         </div>
+
+
 
                         <div class="form-group">
                             <label class="font-weight-bold" for="lname">Last Name</label>
@@ -45,6 +48,8 @@
                                 <true>value="{{@SESSION.lname}}"</true>
                             </check>
                             >
+                            <!--*******Error Span*************** -->
+                            <span class="text-danger">{{@errors.lnameErr}}</span>
                         </div>
 
                         <!-- Number field -->
@@ -56,6 +61,8 @@
                                 <true>value="{{@SESSION.age}}"</true>
                             </check>
                             >
+                            <!--*******Error Span*************** -->
+                            <span class="text-danger">{{@errors.ageErr}}</span>
                         </div>
 
                         <!-- Gender Radio Button-->
@@ -84,6 +91,8 @@
                             <label class="form-check-label" for="Female">
                                 Female
                             </label>
+                            <!--*******Error Span*************** -->
+                            <span class="text-danger">{{@errors.genderErr}}</span>
                         </div>
 
                         <!-- Phone number -->
@@ -94,6 +103,8 @@
                                 <true>value="{{@SESSION.phone}}"</true>
                             </check>
                             >
+                            <!--*******Error Span*************** -->
+                            <span class="text-danger">{{@errors.phoneErr}}</span>
                         </div>
                     </div>
                     <div class="col-md-4 h-100 border rounded mt-4 bg-light">

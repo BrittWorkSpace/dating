@@ -50,7 +50,6 @@
                     </repeat>
                     </select>
 
-
                 <!-- Radio button -->
                     <!--Male-->
                     <label class="font-weight-bold d-block col-">Seeking</label>
@@ -59,8 +58,8 @@
                         <check if="{{ @SESSION.seeking == 'M'}}">
                             <true>checked</true>
                         </check>
-                        <check if="{{ @SESSION.methodtype == 'GET'}}">
-                            <true>checked</true>
+                        <check if="{{ isset(@SESSION.seeking)}}">
+                            <false>checked</false>
                         </check>
                         >
                         <label class="form-check-label" for="Male">

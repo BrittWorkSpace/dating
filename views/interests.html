@@ -21,7 +21,7 @@
     </nav>
     <div class=" p-2 border rounded m-5">
         <!--Start of form -->
-        <form method="post" action="profileSummary">
+        <form method="post" action="interest">
             <!--Form Title -->
             <div class="form-row">
                 <h1 class="border-bottom col">Interests</h1>
@@ -39,7 +39,13 @@
                         key="{{ @key }}"
                         value="{{ @value }}">
                     <div class="form-check form-check-inline col-md-2">
-                        <input class='form-check-input' type='checkbox' name='indoor[]' id={{ @key }} value={{ @value }}>
+                        <input class='form-check-input' type='checkbox' name='indoor[]' id={{ @key }} value={{ @value }}
+                        <check if="{{isset(@SESSION.indoor) }}">
+                            <check if="{{ in_array(@value, @SESSION.indoor) }}">
+                                <true>checked</true>
+                            </check>
+                        </check>
+                        >
                         <label class='form-check-label' for={{ @key }}>
                             {{ @value }}
                         </label>
@@ -57,7 +63,13 @@
                         key="{{ @key }}"
                         value="{{ @value }}">
                     <div class="form-check form-check-inline col-md-2">
-                        <input class='form-check-input' type='checkbox' name='outdoor[]' id={{ @key }} value={{ @value }}>
+                        <input class='form-check-input' type='checkbox' name='outdoor[]' id={{ @key }} value={{ @value }}
+                        <check if="{{isset(@SESSION.outdoor) }}">
+                            <check if="{{ in_array(@value, @SESSION.outdoor) }}">
+                                <true>checked</true>
+                            </check>
+                        </check>
+                        >
                         <label class='form-check-label' for={{ @key }}>
                             {{ @value }}
                         </label>

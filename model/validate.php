@@ -22,7 +22,7 @@ function validName($data)
     }
     else
     {
-        return "Invalid string numbers and special characters not allowed";
+        return "Invalid string. Numbers and special characters are not allowed.";
     }
 
 }
@@ -35,7 +35,7 @@ function validName($data)
 function validAge($data)
 {
     //check is only numerical
-    if(is_numeric($data) && ($data>17 && $data<118))
+    if(is_numeric($data) && ($data>17 && $data<119))
     {
         return "";
     }
@@ -86,15 +86,18 @@ function validEmail($data)
  */
 function validCheckBoxArray($data , $array)
 {
-    $var = 0;
-    foreach($data as $key)
+    if($data!=null)
     {
-        if(!array_key_exists($key, $array))
+        foreach ($data as $key=>$value)
         {
-            return "Improper value provided. Provided value does not match checkboxes provided";
+            if (!in_array($value, $array))
+            {
+                return "Improper value provided. Provided value does not match checkboxes provided";
+            }
         }
+        return "";
     }
-    return true;
+    return "";
 }
 
 /**
