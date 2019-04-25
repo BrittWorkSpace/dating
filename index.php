@@ -58,17 +58,18 @@ $f3->route('GET|POST /personalInfo', function ($f3)
             "genderErr"=>validGender($_POST['gender']),
             "phoneErr"=>validPhone($_POST['phone']) );
 
-        //assign sessions if validate time and sanitize data if neccesarry
-        if($arrayErr['fnameErr']=="") $_SESSION['fname'] = trimFilter($_POST[fname]);
-        if($arrayErr['lnameErr']=="") $_SESSION['lname'] = trim($_POST[lname]);
-        if($arrayErr['ageErr']=="") $_SESSION['age'] = trimFilter($_POST[age]);
-        if($arrayErr['genderErr']=="")$_SESSION['gender'] = $_POST[gender];
-        if($arrayErr['phoneErr']=="")$_SESSION['phone'] = trimFilter($_POST[phone]);
+
 
 
         //check error array is empty re-reoute to next page
         if(checkErrArray($arrayErr))
         {
+            //assign sessions if validate time and sanitize data if neccesarry
+            $_SESSION['fname'] = trimFilter($_POST[fname]);
+            $_SESSION['lname'] = trim($_POST[lname]);
+            $_SESSION['age'] = trimFilter($_POST[age]);
+            $_SESSION['gender'] = $_POST[gender];
+            $_SESSION['phone'] = trimFilter($_POST[phone]);
             $f3->reroute('/profileEntry');
         }
         $f3->set('errors', $arrayErr);
@@ -89,15 +90,15 @@ $f3->route('GET|POST /profileEntry', function ($f3) use ($states)
             "stateErr"=>validateDropDown($_POST['state'], $states),
             "genderErr"=>validGender($_POST['seeking']));
 
-        //assign sessions if validate trim and sanitize data if neccesarry
-        if($arrayErr['emailErr']=="")$_SESSION['email'] = $_POST[email];
-        if($arrayErr['stateErr']=="")$_SESSION['state'] = $_POST[state];
-        if($arrayErr['genderErr']=="")$_SESSION['seeking'] = $_POST[seeking];
-        $_SESSION['bio'] = trimFilter($_POST[bio]);
-
         //check if error free then re-route to next page
         if(checkErrArray($arrayErr))
         {
+            //assign sessions if validate trim and sanitize data if neccesarry
+            $_SESSION['email'] = $_POST[email];
+            $_SESSION['state'] = $_POST[state];
+            $_SESSION['seeking'] = $_POST[seeking];
+            $_SESSION['bio'] = trimFilter($_POST[bio]);
+
             $f3->reroute('/interest');
         }
         $f3->set('errors', $arrayErr);
@@ -126,32 +127,25 @@ $f3->route('GET|POST /interest', function ($f3)
             "indoor" =>validCheckBoxArray($_POST['indoor'], $indoor),
             "outdoot"=>validCheckBoxArray($_POST['outdoor'], $outdoor));
 
-        //check if indoor is errors free then add to activities imploded array if valid
-        if($arrayErr['indoor']=="")
+        //check error array is empty
+        if(checkErrArray($arrayErr))
         {
+            //check if indoor is errors free then add to activities imploded array if valid
             if(isset($_POST[indoor]))
             {
                 $activities .= implode(" ", $_POST[indoor]);
                 $activities .= " ";
             }
             $_SESSION['indoor'] = $_POST[indoor];
-        }
 
-        if($arrayErr['outdoot']=="")
-        {
             if(isset($_POST[outdoor]))
             {
                 $activities.=implode(" ", $_POST[outdoor]);
             }
             $_SESSION['outdoor'] = $_POST[outdoor];
-        }
+            //activities is a imploded data of indoor and outdoor checkbox or empty if no checkboxes selected
+            $_SESSION['interests'] = $activities;
 
-        //activities is a imploded data of indoor and outdoor checkbox or empty if no checkboxes selected
-        $_SESSION['interests'] = $activities;
-
-        //check error array is empty
-        if(checkErrArray($arrayErr))
-        {
             $f3->reroute('/profileSummary');
         }
         $f3->set('errors', $arrayErr);
