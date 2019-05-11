@@ -15,13 +15,10 @@ function validName($data)
 {
 
     //check if the string matches only alpha numeric
-    if (ctype_alpha($data))
-    {
+    if (ctype_alpha($data)) {
         return "";
         //return array(true=>$data);
-    }
-    else
-    {
+    } else {
         return "Invalid string. Contains numbers, special characters, or is empty.";
     }
 
@@ -35,12 +32,9 @@ function validName($data)
 function validAge($data)
 {
     //check is only numerical
-    if(is_numeric($data) && ($data>17 && $data<119))
-    {
+    if(is_numeric($data) && ($data>17 && $data<119)) {
         return "";
-    }
-    else
-    {
+    } else {
         return "Invalid value must be numeric between 18 and 118";
     }
 
@@ -53,12 +47,9 @@ function validAge($data)
  */
 function validPhone($data)
 {
-    if(preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/", $data))
-    {
+    if(preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/", $data)) {
         return "";
-    }
-    else
-    {
+    } else {
         return "Not a valid phone number. Phone number example 253-222-3333";
     }
 }
@@ -71,8 +62,7 @@ function validPhone($data)
 function validEmail($data)
 {
     $data = trim($data);
-    if (filter_var($data, FILTER_VALIDATE_EMAIL))
-    {
+    if (filter_var($data, FILTER_VALIDATE_EMAIL)) {
         return "";
     } else {
         return "Invalid email. Please enter email in format You@email.com";
@@ -86,12 +76,9 @@ function validEmail($data)
  */
 function validCheckBoxArray($data , $array)
 {
-    if($data!=null)
-    {
-        foreach ($data as $key=>$value)
-        {
-            if (!in_array($value, $array))
-            {
+    if($data!=null) {
+        foreach ($data as $key=>$value) {
+            if (!in_array($value, $array)) {
                 return "Improper value provided. Provided value does not match checkboxes provided";
             }
         }
@@ -107,12 +94,9 @@ function validCheckBoxArray($data , $array)
  */
 function validGender($data)
 {
-    if($data=='M' || $data =='F' || !isset($data))
-    {
+    if($data=='M' || $data =='F' || !isset($data)) {
         return"";
-    }
-    else
-    {
+    } else {
         return "Invalid value returned.";
     }
 }
@@ -148,10 +132,8 @@ function validateDropDown($data, $dropDownArray)
  */
 function checkErrArray($data)
 {
-    foreach ($data as $key => $value)
-    {
-        if($value!="")
-        {
+    foreach ($data as $key => $value) {
+        if($value!="") {
             return false;
         }
     }
