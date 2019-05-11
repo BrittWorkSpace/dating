@@ -2,15 +2,15 @@
 
 class Member
 {
-    protected $fname;
-    protected $lname;
-    protected $age;
-    protected $gender;
-    protected $phone;
-    protected $email;
-    protected $state;
-    protected $seeking;
-    protected $bio;
+    private $_fname;
+    private $_lname;
+    private $_age;
+    private $_gender;
+    private $_phone;
+    private $_email;
+    private $_state;
+    private $_seeking;
+    private $_bio;
 
     /**
      * Member constructor takes First name, last name, age, gender and phone number.
@@ -22,11 +22,11 @@ class Member
      */
     public function __construct($fname, $lname, $age, $gender, $phone)
     {
-        $this->fname = $fname;
-        $this->lname = $lname;
-        $this->age = $age;
-        $this->gender = $gender;
-        $this->phone = $phone;
+        $this->_fname = $fname;
+        $this->_lname = $lname;
+        $this->_age = $age;
+        $this->_gender = $gender;
+        $this->_phone = $phone;
     }
 
     /**
@@ -35,65 +35,74 @@ class Member
      */
     public function getFname()
     {
-        return $this->fname;
+        return $this->_fname;
     }
 
     /**
      * Set the first name of the member
-     * @param mixed $fname
+     * @param String $_fname
      * @return void
      */
-    public function setFname($fname)
+    public function setFname($_fname)
     {
-        $this->fname = $fname;
+        $this->_fname = $_fname;
     }
 
     /**
-     * @return mixed
+     * Get the members last name
+     * @return String Members last name
      */
     public function getLname()
     {
-        return $this->lname;
+        return $this->_lname;
     }
 
     /**
-     * @param mixed $lname
+     * Set the last name of a member
+     * @param String $_lname
+     * @return void
      */
-    public function setLname($lname)
+    public function setLname($_lname)
     {
-        $this->lname = $lname;
+        $this->_lname = $_lname;
     }
 
     /**
-     * @return mixed
+     * Get the members age
+     * @return int Members age
      */
     public function getAge()
     {
-        return $this->age;
+        return $this->_age;
     }
 
     /**
-     * @param mixed $age
+     * Set the members age
+     * @param int $_age
+     * @return void
      */
-    public function setAge($age)
+    public function setAge($_age)
     {
-        $this->age = $age;
+        $this->_age = $_age;
     }
 
     /**
-     * @return mixed
+     * Get the gender of the member
+     * @return String Members gender
      */
     public function getGender()
     {
-        return $this->gender;
+        return $this->_gender;
     }
 
     /**
-     * @param mixed $gender
+     * Set the gender of a member
+     * @param String $_gender
+     * @return void
      */
-    public function setGender($gender)
+    public function setGender($_gender)
     {
-        $this->gender = $gender;
+        $this->_gender = $_gender;
     }
 
     /**
@@ -101,15 +110,15 @@ class Member
      */
     public function getPhone()
     {
-        return $this->phone;
+        return $this->_phone;
     }
 
     /**
-     * @param mixed $phone
+     * @param mixed $_phone
      */
-    public function setPhone($phone)
+    public function setPhone($_phone)
     {
-        $this->phone = $phone;
+        $this->_phone = $_phone;
     }
 
     /**
@@ -117,15 +126,15 @@ class Member
      */
     public function getEmail()
     {
-        return $this->email;
+        return $this->_email;
     }
 
     /**
-     * @param mixed $email
+     * @param mixed $_email
      */
-    public function setEmail($email)
+    public function setEmail($_email)
     {
-        $this->email = $email;
+        $this->_email = $_email;
     }
 
     /**
@@ -133,15 +142,15 @@ class Member
      */
     public function getState()
     {
-        return $this->state;
+        return $this->_state;
     }
 
     /**
-     * @param mixed $state
+     * @param mixed $_state
      */
-    public function setState($state)
+    public function setState($_state)
     {
-        $this->state = $state;
+        $this->_state = $_state;
     }
 
     /**
@@ -149,15 +158,15 @@ class Member
      */
     public function getSeeking()
     {
-        return $this->seeking;
+        return $this->_seeking;
     }
 
     /**
-     * @param mixed $seeking
+     * @param mixed $_seeking
      */
-    public function setSeeking($seeking)
+    public function setSeeking($_seeking)
     {
-        $this->seeking = $seeking;
+        $this->_seeking = $_seeking;
     }
 
     /**
@@ -165,15 +174,15 @@ class Member
      */
     public function getBio()
     {
-        return $this->bio;
+        return $this->_bio;
     }
 
     /**
-     * @param mixed $bio
+     * @param mixed $_bio
      */
-    public function setBio($bio)
+    public function setBio($_bio)
     {
-        $this->bio = $bio;
+        $this->_bio = $_bio;
     }
 
 }
