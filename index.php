@@ -48,8 +48,7 @@ $f3->route('GET /', function ()
 $f3->route('GET|POST /personalInfo', function ($f3)
 {
     $nameErr="error";
-    if($_SERVER['REQUEST_METHOD'] =='POST')
-    {
+    if($_SERVER['REQUEST_METHOD'] =='POST') {
         //error array
         $arrayErr=array(
             "fnameErr"=>validName($_POST['fname']),
@@ -58,20 +57,18 @@ $f3->route('GET|POST /personalInfo', function ($f3)
             "genderErr"=>validGender($_POST['gender']),
             "phoneErr"=>validPhone($_POST['phone']) );
 
-
-
-
         //check error array is empty re-reoute to next page
-        if(checkErrArray($arrayErr))
-        {
-            //assign sessions if validate time and sanitize data if neccesarry
-            $_SESSION['fname'] = trimFilter($_POST[fname]);
-            $_SESSION['lname'] = trim($_POST[lname]);
-            $_SESSION['age'] = trimFilter($_POST[age]);
-            $_SESSION['gender'] = $_POST[gender];
-            $_SESSION['phone'] = trimFilter($_POST[phone]);
+        if(checkErrArray($arrayErr)) {
+            if(isset($_POST[prem])) {
+                $_SESSION['member'] = new Premium(trimFilter($_POST[fname]),trim($_POST[lname]),trimFilter($_POST[age]),
+                    $_POST[gender],trimFilter($_POST[phone]) );
+            }else{
+                $_SESSION['member'] = new Member(trimFilter($_POST[fname]),trim($_POST[lname]),trimFilter($_POST[age]),
+                    $_POST[gender],trimFilter($_POST[phone]) );
+            }
             $f3->reroute('/profileEntry');
         }
+
         $f3->set('errors', $arrayErr);
     }
     $view = new Template();
@@ -82,8 +79,7 @@ $f3->route('GET|POST /personalInfo', function ($f3)
 //profile enrty route
 $f3->route('GET|POST /profileEntry', function ($f3) use ($states)
 {
-    if($_SERVER['REQUEST_METHOD'] =='POST')
-    {
+    if($_SERVER['REQUEST_METHOD'] =='POST') {
         //assemble error array
         $arrayErr=array(
             "emailErr"=>validEmail($_POST['email']),
@@ -91,15 +87,18 @@ $f3->route('GET|POST /profileEntry', function ($f3) use ($states)
             "genderErr"=>validGender($_POST['seeking']));
 
         //check if error free then re-route to next page
-        if(checkErrArray($arrayErr))
-        {
+        if(checkErrArray($arrayErr)){
             //assign sessions if validate trim and sanitize data if neccesarry
-            $_SESSION['email'] = $_POST[email];
-            $_SESSION['state'] = $_POST[state];
-            $_SESSION['seeking'] = $_POST[seeking];
-            $_SESSION['bio'] = trimFilter($_POST[bio]);
-
-            $f3->reroute('/interest');
+            $_SESSION['member']->setEmail($_POST[email]);
+            $_SESSION['member']->setState($_POST[state]);
+            $_SESSION['member']->setSeeking($_POST[seeking]);
+            $_SESSION['member']->setBio($_POST[bio]);
+            var_dump($_SESSION['member']);
+            if($_SESSION['member'] instanceof Premium){
+                $f3->reroute('/interest');
+            }else{
+                $f3->reroute('/profilesummary');
+            }
         }
         $f3->set('errors', $arrayErr);
     }
@@ -108,6 +107,7 @@ $f3->route('GET|POST /profileEntry', function ($f3) use ($states)
     echo $view->render('views/profileEntry.html');
 }
 );
+
 //interests route
 $f3->route('GET|POST /interest', function ($f3)
 {
@@ -119,33 +119,17 @@ $f3->route('GET|POST /interest', function ($f3)
     //outdoor array
     $outdoor = array("hike" =>"Hiking", "bike" => "Biking", "swim" => "Swimming", "collect" => "Collecting",
         "walk" => "Walking", "climb" =>"Climbing");
-    $activities="";
-    if($_SERVER['REQUEST_METHOD'] =='POST')
-    {
+
+    if($_SERVER['REQUEST_METHOD'] =='POST') {
         //assemble errorArray
         $arrayErr=array(
             "indoor" =>validCheckBoxArray($_POST['indoor'], $indoor),
             "outdoot"=>validCheckBoxArray($_POST['outdoor'], $outdoor));
 
         //check error array is empty
-        if(checkErrArray($arrayErr))
-        {
-            //check if indoor is errors free then add to activities imploded array if valid
-            if(isset($_POST[indoor]))
-            {
-                $activities .= implode(" ", $_POST[indoor]);
-                $activities .= " ";
-            }
-            $_SESSION['indoor'] = $_POST[indoor];
-
-            if(isset($_POST[outdoor]))
-            {
-                $activities.=implode(" ", $_POST[outdoor]);
-            }
-            $_SESSION['outdoor'] = $_POST[outdoor];
-            //activities is a imploded data of indoor and outdoor checkbox or empty if no checkboxes selected
-            $_SESSION['interests'] = $activities;
-
+        if(checkErrArray($arrayErr)) {
+            $_SESSION['member']->setIndoorInterests($_POST['indoor']);
+            $_SESSION['member']->setOutDoorInterests($_POST['outdoor']);
             $f3->reroute('/profileSummary');
         }
         $f3->set('errors', $arrayErr);
@@ -160,14 +144,28 @@ $f3->route('GET|POST /interest', function ($f3)
 //profileSummary route
 $f3->route('GET|POST /profileSummary', function ($f3)
 {
+    $activities="";
+    if($_SESSION['member'] instanceof Premium){
+        $ind= $_SESSION['member']->getInDoorInterests();
+        $out= $_SESSION['member']->getOutDoorInterests();
+        //check if indoor is errors free then add to activities imploded array if valid
+        if(isset($ind)) {
+            $activities .= implode(" ", $ind);
+            $activities .= " ";
+        }
+        if(isset($out)){
+            $activities.=implode(" ", $ind);
+        }
+    }
+
+    var_dump($_SESSION['member']);
     $view = new Template();
     echo $view->render('views/profileSummary.html');
+
+    $f3->set('activities', $activities);
 }
 );
 
-
 //run fat free
 $f3->run();
-
-
 ?>

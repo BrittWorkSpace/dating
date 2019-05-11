@@ -22,21 +22,21 @@
         <div class="form-row ml-2 mt-2">
             <!--Left SIde-->
             <div class="col-md-6  border rounded p-2">
-                <p>Name: {{@SESSION.fname}} {{@SESSION.lname}}</p>
+                <p>Name: {{@SESSION.member->getFname()  }} {{@SESSION.member->getLname() }}</p>
                 <hr>
-                <p>Gender: {{@SESSION.gender}}</p>
+                <p>Gender: {{@SESSION.member->getGender()}}</p>
                 <hr>
-                <p>Age: {{@SESSION.age}}</p>
+                <p>Age: {{@SESSION.member->getAge()}}</p>
                 <hr>
-                <p>Phone: {{@SESSION.phone}}</p>
+                <p>Phone: {{@SESSION.member->getPhone()}}</p>
                 <hr>
-                <p>Email: {{@SESSION.email}}</p>
+                <p>Email: {{@SESSION.member->getEmail()}}</p>
                 <hr>
-                <p>State: {{@SESSION.state}}</p>
+                <p>State: {{@SESSION.member->getState()}}</p>
                 <hr>
-                <p>Seeking:{{@SESSION.seeking}}</p>
+                <p>Seeking:{{@SESSION.member->getSeeking()}}</p>
                 <hr>
-                <p>Interests: {{@SESSION.interests}}</p>
+                <p>Interests: {{ @activities }}</p>
             </div>
 
             <!--Right Side-->
@@ -50,7 +50,7 @@
             <div class="col-md-6  pl-3 pr-3"></div>
             <!--Right Side-->
             <div class="col-md-6  pl-3 pr-3">
-                <p id="test">{{@SESSION.bio}}</p>
+                <p id="test">{{@SESSION.member->getBio()}}</p>
             </div>
         </div>
         <!--Center Button-->
