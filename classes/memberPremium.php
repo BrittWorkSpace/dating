@@ -1,9 +1,14 @@
 <?php
-class Premium extends Member
+class Member_Premium extends Member
 {
     private $_inDoorInterests;
     private $_outDoorInterests;
 
+    public function __construct($fname, $lname, $age, $gender, $phone)
+    {
+        parent::__construct($fname,$lname, $age,
+            $gender,$phone);
+    }
     /**
      * Gets the indoorinterests of this premium member.
      * @return array _inDoorInterests The interests stored in the premium member
