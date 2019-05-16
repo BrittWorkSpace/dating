@@ -36,7 +36,7 @@
                 <hr>
                 <p>Seeking:{{@SESSION.member->getSeeking()}}</p>
                 <hr>
-                <check if="{{@Session.member instanceof Premium}}">
+                <check if="{{@SESSION.member instanceof Member_Premium}}">
                     <true><p>Interests: {{ @activities }}</p></true>
                 </check>
             </div>

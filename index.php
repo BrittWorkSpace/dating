@@ -60,7 +60,7 @@ $f3->route('GET|POST /personalInfo', function ($f3)
         //check error array is empty re-reoute to next page
         if(checkErrArray($arrayErr)) {
             if(isset($_POST[prem])) {
-                $_SESSION['member'] = new Premium(trimFilter($_POST[fname]),trim($_POST[lname]),trimFilter($_POST[age]),
+                $_SESSION['member'] = new Member_Premium(trimFilter($_POST[fname]),trim($_POST[lname]),trimFilter($_POST[age]),
                     $_POST[gender],trimFilter($_POST[phone]) );
             }else{
                 $_SESSION['member'] = new Member(trimFilter($_POST[fname]),trim($_POST[lname]),trimFilter($_POST[age]),
@@ -93,8 +93,7 @@ $f3->route('GET|POST /profileEntry', function ($f3) use ($states)
             $_SESSION['member']->setState($_POST[state]);
             $_SESSION['member']->setSeeking($_POST[seeking]);
             $_SESSION['member']->setBio($_POST[bio]);
-            var_dump($_SESSION['member']);
-            if($_SESSION['member'] instanceof Premium){
+            if($_SESSION['member'] instanceof Member_Premium){
                 $f3->reroute('/interest');
             }else{
                 $f3->reroute('/profilesummary');
@@ -145,7 +144,7 @@ $f3->route('GET|POST /interest', function ($f3)
 $f3->route('GET|POST /profileSummary', function ($f3)
 {
     $activities="";
-    if($_SESSION['member'] instanceof Premium){
+    if($_SESSION['member'] instanceof Member_Premium){
         $ind= $_SESSION['member']->getInDoorInterests();
         $out= $_SESSION['member']->getOutDoorInterests();
         //check if indoor is errors free then add to activities imploded array if valid
@@ -157,12 +156,9 @@ $f3->route('GET|POST /profileSummary', function ($f3)
             $activities.=implode(" ", $ind);
         }
     }
-
-    var_dump($_SESSION['member']);
+    $f3->set('activities', $activities);
     $view = new Template();
     echo $view->render('views/profileSummary.html');
-
-    $f3->set('activities', $activities);
 }
 );
 
