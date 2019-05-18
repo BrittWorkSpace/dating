@@ -41,28 +41,32 @@ Class database
 {
     private $dbh;
 
+    public function __construct()
+    {
+        #this->dbh="Not connected";
+
+    }
+
     public function connect()
     {
         try{
-            $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD
+            $this->dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD
             );
-            return $dbh;
         } catch (PDOException $e)
         {
-            echo $e->getMessage();
-            return $dbh="";
+            $this->dbh = $e->getMessage();
+
         }
     }
 
     public function insertMember($member)
     {
-        $dbh = $this->connect();
-        if(isset($dbh)){
+        if(isset($this->dbh)){
             //prepare sql statement
             $sql = "INSERT INTO member(fname, lname, age, gender, phone, email, state, seeking, bio, premium) 
                 VALUES (:fname, :lname, :age, :gender, :phone, :email, :state, :seeking, :bio, :premium)";
             //save prepared statement
-            $statement = $dbh->prepare($sql);
+            $statement = $this->dbh->prepare($sql);
 
             //assign values
             $fname = $member->getFname();
@@ -72,6 +76,16 @@ Class database
             $phone = $member->getPhone();
             $state = $member->getState();
             $seeking = $member->getSeeking();
+            $email = $member->getEmail();
+            $bio = $member->getBio();
+            if($member instanceof  Member_Premium)
+            {
+                $premium =1;
+            }
+            else
+            {
+                $premium=0;
+            }
 
             //bind params
             $statement->bindParam(':fname',$fname, PDO::PARAM_STR);
@@ -83,28 +97,27 @@ Class database
             $statement->bindParam(':state', $state, PDO::PARAM_STR);
             $statement->bindParam(':seeking', $seeking, PDO::PARAM_STR);
             $statement->bindParam(':bio', $bio, PDO::PARAM_STR);
-            $statement->bindParam(':premium', $premium, PDO::PARAM_STR);
+            $statement->bindParam(':premium', $premium, PDO::PARAM_INT);
 
             //execute insert into member
             $statement->execute();
 
             //grab id of insert
-            $id = $dbh->lastInsertId();
+            $id = $this->dbh->lastInsertId();
 
             //check if Premium member to insert
             if($member instanceof Member_Premium) {
-                insertInterest($member->getIndoorInterest(), $id, $dbh);
-                insertInterest($member->getOutDoorInterests(), $id, $dbh);
+                insertInterest($member->getIndoorInterest(), $id);
+                insertInterest($member->getOutDoorInterests(), $id);
             }
         }
     }
 
     private function getInterestID($interest)
     {
-        $dbh = $this->connect();
-        if(isset($dbh)){
+        if(isset($this->dbh)){
             $sql = "SELECT interest_id FROM interest WHERE interest = :interest";
-            $statement = $dbh->prepare($sql);
+            $statement = $this->dbh->prepare($sql);
             $statement->bindParam(':interest', $interest, PDO::PARAM_STR);
             $statement->execute();
             $row = $statement->fetch(PDO::FETCH_ASSOC);
@@ -112,10 +125,10 @@ Class database
         }
     }
 
-    private function insertInterest($array,$id,$dbh)
+    private function insertInterest($array,$id)
     {
         $sql = "INSERT INTO memberinterest(interest_id, member_id) VALUES (:interest, :member)";
-        $statement = $dbh->prepare($sql);
+        $statement = $this->dbh->prepare($sql);
 
         //for each indoor interest bind and execute statemnt
         foreach ($array as $value) {
@@ -131,18 +144,16 @@ Class database
 
     public function getMembers()
     {
-        $dbh = $this->connect();
         $sql = "SELECT * FROM members";
-        $statement = $dbh->prepare($sql);
+        $statement = $this->dbh->prepare($sql);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getMember($member_id)
     {
-        $dbh = $this->connect();
         $sql = "SELECT * FROM member WHERE member_id = :id";
-        $statement = $dbh->prepare($sql);
+        $statement = $this->dbh->prepare($sql);
 
         $statement->bindParam(":id", $member_id, PDO::PARAM_INT);
         $statement->execute();
@@ -151,9 +162,8 @@ Class database
 
     public function getInterests($member_id)
     {
-        $dbh = $this->connect();
         $sql = "SELECT * FROM memberinterest WHERE member_id = :id";
-        $statement = $dbh->prepare($sql);
+        $statement = $this->dbh->prepare($sql);
 
         $statement->bindParam(":id", $member_id, PDO::PARAM_INT);
         $statement->execute();
