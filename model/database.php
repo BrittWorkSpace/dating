@@ -59,8 +59,13 @@ Class database
     {
         $dbh = $this->connect();
         if(isset($dbh)){
+            //prepare sql statement
             $sql = "INSERT INTO members(fname, lname, age, gender, phone, email, state, seeking, bio, premium) 
                 VALUES (:fname, :lname, :age, :gender, :phone, :email, :state, :seeking, :bio, :premium)";
+            //save prepared statement
+            $statement = $dbh->prepare($sql);
+
+            //assign values
             $fname = $member->getFname();
             $lname = $member->getLname();
             $age = $member->getAge();
@@ -69,8 +74,7 @@ Class database
             $state = $member->getState();
             $seeking = $member->getSeeking();
 
-
-            $statement = $dbh->prepare($sql);
+            //bind params
             $statement->bindParam(':fname',$fname, PDO::PARAM_STR);
             $statement->bindParam(':lname', $lname, PDO::PARAM_STR);
             $statement->bindParam(':age', $age, PDO::PARAM_INT);
@@ -81,6 +85,49 @@ Class database
             $statement->bindParam(':seeking', $seeking, PDO::PARAM_STR);
             $statement->bindParam(':bio', $bio, PDO::PARAM_STR);
             $statement->bindParam(':premium', $premium, PDO::PARAM_STR);
+
+            //execute insert into member
+            $statement->execute();
+
+            //grab id of insert
+            $id = $dbh->lastInsertId();
+
+            //check if Premium member to insert
+            if($member instanceof Member_Premium) {
+                insertInterest($member->getIndoorInterest(), $id, $dbh);
+                insertInterest($member->getOutDoorInterests(), $id, $dbh);
+            }
+        }
+    }
+
+    private function getInterestID($interest)
+    {
+        $dbh = $this->connect();
+        if(isset($dbh)){
+            $sql = "SELECT interest_id FROM interest WHERE interest = :interest";
+            $statement = $dbh->prepare($sql);
+            $statement->bindParam(':interest', $interest, PDO::PARAM_STR);
+            $statement->execute();
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+            return $row['interest_id'];
+        }
+    }
+
+    private function insertInterest($array,$id,$dbh)
+    {
+        $sql = "INSERT INTO memberinterest(interest_id, member_id) VALUES (:interest, :member)";
+        $statement = $dbh->prepare($sql);
+
+        //for each indoor interest bind and execute statemnt
+        foreach ($array as $value)
+        {
+            //bind interest id and member id
+            $statement->bindParam(":interest", $this->getInterestID($value),
+                PDO::PARAM_STR);
+            $statement->bindParam(":member", $id, PDO::PARAM_STR);
+
+            //execute
+            $statement->execute();
         }
     }
 
