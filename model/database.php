@@ -59,7 +59,7 @@ Class database
         $dbh = $this->connect();
         if(isset($dbh)){
             //prepare sql statement
-            $sql = "INSERT INTO members(fname, lname, age, gender, phone, email, state, seeking, bio, premium) 
+            $sql = "INSERT INTO member(fname, lname, age, gender, phone, email, state, seeking, bio, premium) 
                 VALUES (:fname, :lname, :age, :gender, :phone, :email, :state, :seeking, :bio, :premium)";
             //save prepared statement
             $statement = $dbh->prepare($sql);
@@ -141,7 +141,7 @@ Class database
     public function getMember($member_id)
     {
         $dbh = $this->connect();
-        $sql = "SELECT * FROM members WHERE member_id = :id";
+        $sql = "SELECT * FROM member WHERE member_id = :id";
         $statement = $dbh->prepare($sql);
 
         $statement->bindParam(":id", $member_id, PDO::PARAM_INT);
@@ -151,6 +151,12 @@ Class database
 
     public function getInterests($member_id)
     {
+        $dbh = $this->connect();
+        $sql = "SELECT * FROM memberinterest WHERE member_id = :id";
+        $statement = $dbh->prepare($sql);
 
+        $statement->bindParam(":id", $member_id, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 }
