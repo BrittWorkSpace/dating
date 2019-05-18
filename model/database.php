@@ -37,16 +37,29 @@ CREATE TABLE memberinterest
 */
 require '/home2/mbrittgr/config.php';
 
+/**
+ * @author Michael Britt
+ * @version 1.0
+ * Date: 5/18/2019
+ * Class database connects to database for dating website, inserts members, inserts interests
+ */
 Class database
 {
     private $dbh;
 
+    /**
+     * database constructor. Start out disconnected
+     */
     public function __construct()
     {
         #this->dbh="Not connected";
 
     }
 
+    /**
+     * Attempts to connect to database, saves error message if not connected
+     * @return void
+     */
     public function connect()
     {
         try{
@@ -59,6 +72,11 @@ Class database
         }
     }
 
+    /**
+     * Inserts a member into database
+     * @param $member A membership object
+     * @return void
+     */
     public function insertMember($member)
     {
         if(isset($this->dbh)){
@@ -107,12 +125,26 @@ Class database
 
             //check if Premium member to insert
             if($member instanceof Member_Premium) {
-                insertInterest($member->getIndoorInterest(), $id);
-                insertInterest($member->getOutDoorInterests(), $id);
+                $indoor=$member->getInDoorInterests();
+                $outdoor=$member->getOutDoorInterests();
+                if(isset($indoor))
+                {
+                    $this->insertInterest($indoor, $id);
+                }
+                if(isset($outdoor))
+                {
+                    $this->insertInterest($outdoor, $id);
+                }
+
             }
         }
     }
 
+    /**
+     * Checks db for interest and returns its id
+     * @param $interest String interests name
+     * @return Int interest id
+     */
     private function getInterestID($interest)
     {
         if(isset($this->dbh)){
@@ -125,6 +157,11 @@ Class database
         }
     }
 
+    /**
+     * Takes an array of interests and inserts them into db with member id
+     * @param $array interest array
+     * @param $id Int db members id
+     */
     private function insertInterest($array,$id)
     {
         $sql = "INSERT INTO memberinterest(interest_id, member_id) VALUES (:interest, :member)";
@@ -142,6 +179,10 @@ Class database
         }
     }
 
+    /**
+     * Retrieves all members from the database
+     * @return Array the result of the database retrieval
+     */
     public function getMembers()
     {
         $sql = "SELECT * FROM members";
@@ -150,6 +191,11 @@ Class database
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Retrieves a specific member from the database
+     * @param $member_id The id of the member to be retrieved
+     * @return Array The result of the sql query
+     */
     public function getMember($member_id)
     {
         $sql = "SELECT * FROM member WHERE member_id = :id";
@@ -160,6 +206,11 @@ Class database
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Gets the interests of a specific member of the database
+     * @param $member_id The id of the member to retrieved
+     * @return Array The result of the sql query
+     */
     public function getInterests($member_id)
     {
         $sql = "SELECT * FROM memberinterest WHERE member_id = :id";
