@@ -21,6 +21,7 @@ $f3 = Base::instance();
 //session starts
 session_start();
 
+
 //state array
 $states = array
 (
@@ -96,6 +97,11 @@ $f3->route('GET|POST /profileEntry', function ($f3) use ($states)
             if($_SESSION['member'] instanceof Member_Premium){
                 $f3->reroute('/interest');
             }else{
+                //istantiate a db object
+                $database = new database();
+                $database->connect();
+                //insert member
+                $database->insertMember($_SESSION['member']);
                 $f3->reroute('/profilesummary');
             }
         }
@@ -129,6 +135,14 @@ $f3->route('GET|POST /interest', function ($f3)
         if(checkErrArray($arrayErr)) {
             $_SESSION['member']->setIndoorInterests($_POST['indoor']);
             $_SESSION['member']->setOutDoorInterests($_POST['outdoor']);
+
+            //istantiate a db object
+            $database = new database();
+            $database->connect();
+            //insert member
+            $database->insertMember($_SESSION['member']);
+
+
             $f3->reroute('/profileSummary');
         }
         $f3->set('errors', $arrayErr);
