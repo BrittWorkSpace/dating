@@ -47,8 +47,7 @@ Class database
             $dbh = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD
             );
             return $dbh;
-        }
-        catch (PDOException $e)
+        } catch (PDOException $e)
         {
             echo $e->getMessage();
             return $dbh="";
@@ -119,12 +118,11 @@ Class database
         $statement = $dbh->prepare($sql);
 
         //for each indoor interest bind and execute statemnt
-        foreach ($array as $value)
-        {
+        foreach ($array as $value) {
             //bind interest id and member id
             $statement->bindParam(":interest", $this->getInterestID($value),
-                PDO::PARAM_STR);
-            $statement->bindParam(":member", $id, PDO::PARAM_STR);
+                PDO::PARAM_INT);
+            $statement->bindParam(":member", $id, PDO::PARAM_INT);
 
             //execute
             $statement->execute();
@@ -133,12 +131,22 @@ Class database
 
     public function getMembers()
     {
-
+        $dbh = $this->connect();
+        $sql = "SELECT * FROM members";
+        $statement = $dbh->prepare($sql);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getMember($member_id)
     {
+        $dbh = $this->connect();
+        $sql = "SELECT * FROM members WHERE member_id = :id";
+        $statement = $dbh->prepare($sql);
 
+        $statement->bindParam(":id", $member_id, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
     public function getInterests($member_id)
