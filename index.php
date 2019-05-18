@@ -176,6 +176,14 @@ $f3->route('GET|POST /profileSummary', function ($f3)
 }
 );
 
+
+$f3->route('GET /admin', function ($f3)
+{
+
+    $view = new Template();
+    echo $view->render("views/admin.html");
+}
+);
 //run fat free
 $f3->run();
 ?>
