@@ -179,8 +179,13 @@ $f3->route('GET|POST /profileSummary', function ($f3)
 
 $f3->route('GET /admin', function ($f3)
 {
-
+    //istantiate a db object
+    $database = new database();
+    $database->connect();
+    $memberdata = $database->getMembers();
     $view = new Template();
+    $f3->set('members', $memberdata);
+    $f3->set('db', $database);
     echo $view->render("views/admin.html");
 }
 );

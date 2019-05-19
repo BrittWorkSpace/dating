@@ -4,10 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <title>Admin Page</title>
 </head>
 <body>
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="{{@BASE}}">Villians need love too</a>
+        <a class="navbar-brand" href="admin">Admin</a>
+    </nav>
 
+    <table id="table" class="display">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>State</th>
+            <th>Gender</th>
+            <th>Seeking</th>
+            <th>Premium</th>
+            <th>Interests</th>
+        </tr>
+        <check if="{{isset(@members)}}">
+            <repeat group="{{ @members }}"
+                    key="{{ @key }}"
+                    value="{{ @value }}">
+            <tr>
+                <td>{{@value['member_id']}}</td>
+                <td>{{@value['fname'] . " " . @value['lname']}}</td>
+                <td>{{@value['age']}}</td>
+                <td>{{@value['phone']}}</td>
+                <td>{{@value['email']}}</td>
+                <td>{{@value['state']}}</td>
+                <td>{{@value['gender']}}</td>
+                <td>{{@value['seeking']}}</td>
+                <td>
+                    <check if="{{@value['premium']==1}}">
+                        <true><div class="custom-control custom-checkbox">
+                            <input checked disabled type="checkbox" class="custom-control-input" id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1"></label></true>
+                        <false><div class="custom-control custom-checkbox">
+                            <input disabled type="checkbox" class="custom-control-input" id="customCheck2">
+                            <input disabled type="checkbox" class="custom-control-input" id="customCheck2">
+                            <label class="custom-control-label" for="customCheck2"></label></false>
+                    </check>
+                </td>
+                <td>{{@db->getInterests(@value['member_id'])}}</td>
+            </tr>
+
+            </repeat>
+        </check>
+    </table>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script>$("#table").DataTable();</script>
 </body>
 </html>

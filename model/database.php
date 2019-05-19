@@ -185,7 +185,7 @@ Class database
      */
     public function getMembers()
     {
-        $sql = "SELECT * FROM members";
+        $sql = "SELECT * FROM member ORDER BY lname ASC";
         $statement = $this->dbh->prepare($sql);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -209,7 +209,7 @@ Class database
     /**
      * Gets the interests of a specific member of the database
      * @param $member_id The id of the member to retrieved
-     * @return Array The result of the sql query
+     * @return String Interests imploded into a string
      */
     public function getInterests($member_id)
     {
@@ -218,6 +218,34 @@ Class database
 
         $statement->bindParam(":id", $member_id, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $intrestArray= array();
+        if (isset($result)) {
+            foreach ($result as $value) {
+                array_push( $intrestArray, $this->getInterestString($value['interest_id']));
+            }
+
+            return implode(", ", $intrestArray);
+        }else{
+            return "";
+        }
+    }
+
+    /**
+     * Returns a String of the interest
+     * @param $interest_id The id of an interest from the interest table
+     * @return String interest name as a string
+     */
+    private function getInterestString($interest_id)
+    {
+        $sql = "SELECT * FROM interest WHERE interest_id = :id";
+        $statement = $this->dbh->prepare($sql);
+
+        $statement->bindParam(":id", $interest_id, PDO::PARAM_INT);
+        $statement->execute();
+
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $result['interest'];
     }
 }
